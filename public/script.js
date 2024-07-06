@@ -2,6 +2,7 @@ const userVideo = document.getElementById("user-video");
 const startButton = document.getElementById("start-btn");
 
 const state = { media: null };
+const socket = io();
 
 //record user's media stream and convert it to binary
 startButton.addEventListener("click", () => {
@@ -13,6 +14,7 @@ startButton.addEventListener("click", () => {
 
   mediaRecorder.ondataavailable = (event) => {
     console.log("Binary stream available", event.data);
+    socket.emit("binarystream", event.data);
   };
 
   mediaRecorder.start(25);
